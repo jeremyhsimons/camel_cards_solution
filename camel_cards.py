@@ -38,7 +38,7 @@ def check_hand_type(input_hand):
     1. After the hashmap is created, check whether "J" exists
 
     2. If so, iterate through keys/values to find the most common
-    card in a copy of the hand minus jacks. 
+    card in a copy of the hashmap minus jacks. 
     if all values in hashmap are 1, return score
     for 1 pair (it's not possible for a hand with a jack to be less
     than 1 pair).
