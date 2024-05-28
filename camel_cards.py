@@ -1,7 +1,12 @@
 """A program to play Camel Cards"""
 
 
-CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+CARD_STRENGTH = [
+    "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"
+]
+NEW_RULE_CARD_STRENGTH = [
+    "J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"
+]
 
 
 def split_input_string(file_path):
@@ -24,6 +29,31 @@ def split_input_string(file_path):
 def check_hand_type(input_hand):
     """
     A function that returns the type of hand based on the cards.
+
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Ideas for updating this part of the solution to handle
+    the wildcard rule:
+
+    1. After the hashmap is created, check whether "J" exists
+
+    2. If so, iterate through keys/values to find the most common
+    card in a copy of the hand minus jacks. 
+    if all values in hashmap are 1, return score
+    for 1 pair (it's not possible for a hand with a jack to be less
+    than 1 pair).
+
+    3. find the number of jacks in the hand.
+
+    4. add a new record to the hashmap for the sum of the number
+    of jacks and the other most common card value.
+
+    5. remove jack and common card value from the hashmap
+
+    6. execute the rest of the function as normal.
+
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     """
     hash_map = {}
     for card in input_hand:
@@ -75,17 +105,10 @@ def insertion_sort(hands):
     indexing_length = range(1, len(hands))
     for i in indexing_length:
         positive = i > 0
-        # card_strengths = assess_higher_card(list_a[i-1][0], list_a[i][0])
-        # print(list_a[i-1][0], list_a[i][0], card_strengths)
-        # is_higher = card_strengths[1] > card_strengths[0]
         value_to_sort = hands[i][2]
         while hands[i-1][2] > value_to_sort and positive:
             hands[i], hands[i-1] = hands[i-1], hands[i]
             i = i - 1
-            # card_strengths = assess_higher_card(list_a[i-1][0], list_a[i][0])
-            # print("----", list_a[i-1][0], list_a[i][0], card_strengths)
-            # print(TYPE_STRENGTH[list_a[i-1][2]] > value_to_sort)
-            # is_higher = card_strengths[1] < card_strengths[0]
 
     return hands
 
@@ -119,6 +142,7 @@ def sort_by_highest_card(hands):
         positive = i > 0
         card_strengths = assess_higher_card(hands[i-1][0], hands[i][0])
         is_lower = card_strengths[1] < card_strengths[0]
+        # lower score, positive index, same hand type.
         while is_lower and positive and hands[i][2] == hands[i-1][2]:
             hands[i], hands[i-1] = hands[i-1], hands[i]
             i = i - 1
@@ -157,14 +181,15 @@ def play_game():
     inputs = split_input_string("inputs.txt")
     hands_with_types = find_hand_type(inputs)
     sorted_1 = insertion_sort(hands_with_types)
-    # sorted_2 = insertion_sort(sorted_1)
     sorted_2 = sort_by_highest_card(sorted_1)
     ranked = rank_hands(sorted_2)
     total_winnings = find_total_winnings(ranked)
     print(sorted_2)
-    print(total_winnings)
     return total_winnings
 
 
 if __name__ == "__main__":
     winnings = play_game()
+    print(winnings)
+    # correct answer for part 1:
+    # 253205868
