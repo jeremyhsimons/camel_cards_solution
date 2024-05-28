@@ -64,6 +64,29 @@ def find_hand_type(hands):
     return hands
 
 
+def insertion_sort(hands):
+    """
+    A function to sort hands smallest to largest.
+    Insertion sort algorithm.
+    """
+    indexing_length = range(1, len(hands))
+    for i in indexing_length:
+        positive = i > 0
+        # card_strengths = assess_higher_card(list_a[i-1][0], list_a[i][0])
+        # print(list_a[i-1][0], list_a[i][0], card_strengths)
+        # is_higher = card_strengths[1] > card_strengths[0]
+        value_to_sort = hands[i][2]
+        while hands[i-1][2] > value_to_sort and positive:
+            hands[i], hands[i-1] = hands[i-1], hands[i]
+            i = i - 1
+            # card_strengths = assess_higher_card(list_a[i-1][0], list_a[i][0])
+            # print("----", list_a[i-1][0], list_a[i][0], card_strengths)
+            # print(TYPE_STRENGTH[list_a[i-1][2]] > value_to_sort)
+            # is_higher = card_strengths[1] < card_strengths[0]
+
+    return hands
+
+
 def play_game():
     """
     A function to control the logic
@@ -71,7 +94,9 @@ def play_game():
     """
     inputs = split_input_string("inputs.txt")
     hands_with_types = find_hand_type(inputs)
-    print(hands_with_types)
+    sorted_1 = insertion_sort(hands_with_types)
+    # sorted_2 = insertion_sort(sorted_1)
+    print(sorted_1)
 
 
 if __name__ == "__main__":
