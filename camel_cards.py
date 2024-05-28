@@ -1,7 +1,7 @@
 """A program to play Camel Cards"""
 
 
-CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "9", "T", "J", "Q", "K"]
+CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "9", "T", "J", "Q", "K", "A"]
 
 
 def split_input_string(file_path):
@@ -109,6 +109,25 @@ def assess_higher_card(list_1, list_2):
     return [0, 0]
 
 
+def sort_by_highest_card(hands):
+    """
+    A sorting algorithm to order hands
+    according to which has the first highest card.
+    """
+    indexing_length = range(1, len(hands))
+    for i in indexing_length:
+        positive = i > 0
+        card_strengths = assess_higher_card(hands[i-1][0], hands[i][0])
+        is_lower = card_strengths[1] < card_strengths[0]
+        while is_lower and positive and hands[i][2] == hands[i-1][2]:
+            hands[i], hands[i-1] = hands[i-1], hands[i]
+            i = i - 1
+            card_strengths = assess_higher_card(hands[i-1][0], hands[i][0])
+            is_lower = card_strengths[1] < card_strengths[0]
+
+    return hands
+
+
 def play_game():
     """
     A function to control the logic
@@ -118,7 +137,8 @@ def play_game():
     hands_with_types = find_hand_type(inputs)
     sorted_1 = insertion_sort(hands_with_types)
     # sorted_2 = insertion_sort(sorted_1)
-    print(sorted_1)
+    sorted_2 = sort_by_highest_card(sorted_1)
+    print(sorted_2)
 
 
 if __name__ == "__main__":
