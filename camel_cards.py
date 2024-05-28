@@ -1,7 +1,7 @@
 """A program to play Camel Cards"""
 
 
-CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "9", "T", "J", "Q", "K", "A"]
+CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 
 
 def split_input_string(file_path):
@@ -128,6 +128,27 @@ def sort_by_highest_card(hands):
     return hands
 
 
+def rank_hands(hands):
+    """
+    A function to give all the hands a rank
+    which can then be used to multiply bids.
+    """
+    for i in range(len(hands)):
+        hands[i].append(i+1)
+    return hands
+
+
+def find_total_winnings(hands):
+    """ 
+    A function that mutliplies all the winnings by
+    each hand's rank and sums them.
+    """
+    total = 0
+    for hand in hands:
+        total += hand[1] * hand[3]
+    return total
+
+
 def play_game():
     """
     A function to control the logic
@@ -138,8 +159,12 @@ def play_game():
     sorted_1 = insertion_sort(hands_with_types)
     # sorted_2 = insertion_sort(sorted_1)
     sorted_2 = sort_by_highest_card(sorted_1)
+    ranked = rank_hands(sorted_2)
+    total_winnings = find_total_winnings(ranked)
     print(sorted_2)
+    print(total_winnings)
+    return total_winnings
 
 
 if __name__ == "__main__":
-    play_game()
+    winnings = play_game()
