@@ -1,6 +1,9 @@
 """A program to play Camel Cards"""
 
 
+CARD_STRENGTH = ["2", "3", "4", "5", "6", "7", "9", "T", "J", "Q", "K"]
+
+
 def split_input_string(file_path):
     """
     A function to read the input data
@@ -85,6 +88,25 @@ def insertion_sort(hands):
             # is_higher = card_strengths[1] < card_strengths[0]
 
     return hands
+
+
+def assess_higher_card(list_1, list_2):
+    """
+    loops through all the cards and checks against mapping
+    to see which hand is the strongest. 
+    """
+    for i, value in enumerate(list_1):
+        if value == list_2[i]:
+            continue
+        list_1_strength = 0
+        list_2_strength = 0
+        for j, card in enumerate(CARD_STRENGTH):
+            if card == list_1[i]:
+                list_1_strength = j
+            if card == list_2[i]:
+                list_2_strength = j
+        return [list_1_strength, list_2_strength]
+    return [0, 0]
 
 
 def play_game():
