@@ -1,4 +1,37 @@
-"""A program to play Camel Cards"""
+"""
+A program to play Camel Cards
+
+The program needs to do the following to solve the problem:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PART 1:
+
+1. Read a 'hand' of cards and assign it a score based on
+what type it is.
+(check_hand_type)
+
+2. Assess which of two hands has the first high card
+(assess_higher_card)
+
+3. Sort the list of hands by their type
+as well as by which hands have higher scoring cards sooner.
+(sort_by_type, sort_by_highest_card)
+
+4. Assign a rank to each hand once sorted, multiply by the bid,
+and return the sum of all the bids.
+(rank_hands, find_total_winnings)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PART 2:
+
+The program needs to be able to recognise "J" as wild and
+assign hands the correct type accordingly.
+
+The program needs to recognise "J" as the lowest card.
+
+It needs to keep treating all other hands without "J"
+as they were treated in part 1.
+
+"""
 
 
 CARD_STRENGTH = [
@@ -53,7 +86,6 @@ def check_hand_type(input_hand):
     6. execute the rest of the function as normal.
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     """
     hash_map = {}
     for card in input_hand:
@@ -97,7 +129,7 @@ def find_hand_type(hands):
     return hands
 
 
-def insertion_sort(hands):
+def sort_by_type(hands):
     """
     A function to sort hands smallest to largest.
     Insertion sort algorithm.
@@ -180,7 +212,7 @@ def play_game():
     """
     inputs = split_input_string("inputs.txt")
     hands_with_types = find_hand_type(inputs)
-    sorted_1 = insertion_sort(hands_with_types)
+    sorted_1 = sort_by_type(hands_with_types)
     sorted_2 = sort_by_highest_card(sorted_1)
     ranked = rank_hands(sorted_2)
     total_winnings = find_total_winnings(ranked)
